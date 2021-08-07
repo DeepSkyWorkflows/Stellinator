@@ -29,21 +29,20 @@ jobs:
 
       - name: Build
         shell: bash
-        working-directory: Stellinator
         run: |
           tag=$(git describe --tags --abbrev=0)
           release_name="Stellinator-$tag-${{ matrix.target }}"
           # Build everything
-          dotnet publish Stellinator.csproj --framework net5.0 --runtime "${{ matrix.target }}" -c Release -o "$release_name"
+          dotnet publish ./Stellinator/Stellinator.csproj --framework net5.0 --runtime "${{ matrix.target }}" -c Release -o "$release_name"
           # Pack files
           if [ "${{ matrix.target }}" == "win-x64" ]; then
             # Pack to zip for Windows
-            7z a -tzip "${release_name}.zip" "./${release_name}/*"
+            7z a -tzip "${release_name}.zip" "./Stellinator/${release_name}/*"
           else
-          tar czvf "${release_name}.tar.gz" "$release_name"
+          tar czvf "${release_name}.tar.gz" "./Stellinator/$release_name"
           fi
           # Delete output directory
-          rm -r "$release_name"
+          rm -r "./Stellinator/$release_name"
       - name: Publish
         uses: softprops/action-gh-release@v1
         with:
