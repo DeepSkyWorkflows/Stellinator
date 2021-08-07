@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Stellinator": {
+      "commandName": "Project",
+      "commandLineArgs": "-s f:\\ e:\\test"
+    }
+  }
+}
