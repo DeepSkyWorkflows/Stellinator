@@ -82,7 +82,7 @@ IC443
 ```
 ## Getting started
 
-Check out our [releases](https://github.com/JeremyLikness/DeepSkyWorkflows/releases) to download the latest. 
+Check out our [releases](https://github.com/DeepSkyWorkflows/Stellinator/releases) to download the latest. Install wherever you like, and make sure that directory is in your path when you run it.
 
 > **NOTE** be sure to run using the `-s` flag to see how your filesystem will be impacted without making changes!
 
