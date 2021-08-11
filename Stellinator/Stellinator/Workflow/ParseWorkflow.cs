@@ -97,9 +97,11 @@ namespace Stellinator.Workflow
             result.IsRaw = result.FileExtension == "fits";
             result.Valid = result.FileExtension == "fits" || processedExtensions.Contains(result.FileExtension);
 
-            var observationParts = parts[^3].Split('_');
-            result.ObservationDate = DateTime.ParseExact(observationParts[0], "yyyy-MM-dd", CultureInfo.InvariantCulture);
-            var sequenceAndName = observationParts[1].Split("-observation-");
+            var divider = parts[^3].IndexOf('_');
+            var datePart = parts[^3].Substring(0, divider);
+            var seqPart = parts[^3].Substring(divider);
+            result.ObservationDate = DateTime.ParseExact(datePart, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+            var sequenceAndName = seqPart.Split("-observation-");
             result.ObservationSequence = sequenceAndName[0];
             result.Observation = sequenceAndName[1];
 
