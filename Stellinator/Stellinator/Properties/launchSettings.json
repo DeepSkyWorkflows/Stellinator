@@ -2,7 +2,7 @@
   "profiles": {
     "Stellinator": {
       "commandName": "Project",
-      "commandLineArgs": "-s f:\\ e:\\test"
+      "commandLineArgs": "-s -c g:\\ d:\\photography\\astro\\raw\\misc"
     }
   }
 }

@@ -80,6 +80,7 @@ namespace StellinatorTests
                 false,
                 false,
                 false,
+                false,
                 ignoreFlags,
                 GroupStrategy.Date,
                 TargetFilenameStrategy.TicksHex,

@@ -83,7 +83,7 @@ namespace Stellinator.Workflow
                 FileExtension = Path.GetExtension(parts[^1])[1..],
             };
 
-            if (parts.Length < 4 || !parts[^2].Contains("capture") || !parts[^3].Contains("observation"))
+            if (parts.Length < 4 || !parts[^3].Contains("observation"))
             {
                 result.Valid = false;
                 return result;
@@ -102,6 +102,16 @@ namespace Stellinator.Workflow
             var seqPart = parts[^3].Substring(divider);
             result.ObservationDate = DateTime.ParseExact(datePart, "yyyy-MM-dd", CultureInfo.InvariantCulture);
             var sequenceAndName = seqPart.Split("-observation-");
+            if (sequenceAndName.Length == 1)
+            {
+                sequenceAndName = sequenceAndName[0].Split("_observation_");
+                if (sequenceAndName.Length > 1)
+                {
+                    result.Rejected = false;
+                    result.IsNewFormat = true;
+                }
+            }
+
             result.ObservationSequence = sequenceAndName[0];
             result.Observation = sequenceAndName[1];
 

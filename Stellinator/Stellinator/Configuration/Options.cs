@@ -31,6 +31,7 @@ namespace Stellinator.Configuration
         /// <param name="directoryOnly">The recurse subdirectories option.</param>
         /// <param name="quietMode">The quiet mode option.</param>
         /// <param name="scanOnly">The scan only option.</param>
+        /// <param name="includeScope">The scope include option.</param>
         /// <param name="ignoreFlags">The ignore flags option.</param>
         /// <param name="groupStrategy">The grouping strategy option.</param>
         /// <param name="targetFilenameStrategy">The filename renaming strategy option.</param>
@@ -41,6 +42,7 @@ namespace Stellinator.Configuration
             bool directoryOnly,
             bool quietMode,
             bool scanOnly,
+            bool includeScope,
             IgnoreFlags ignoreFlags,
             GroupStrategy groupStrategy,
             TargetFilenameStrategy targetFilenameStrategy,
@@ -69,6 +71,7 @@ namespace Stellinator.Configuration
             DirectoryOnly = directoryOnly;
             QuietMode = quietMode;
             ScanOnly = scanOnly;
+            IncludeScope = includeScope;
             Ignore = ignoreFlags;
             GroupStrategy = groupStrategy;
             TargetFilenameStrategy = targetFilenameStrategy;
@@ -86,19 +89,22 @@ namespace Stellinator.Configuration
             {
                 new Example(
                     "Copy images sorting rejects and accepted and grouped by date",
-                    new Options(false, false, false, IgnoreFlags.Nothing, GroupStrategy.Date, TargetFilenameStrategy.TicksHex, null, @"F:", @"E:")),
+                    new Options(false, false, false, false, IgnoreFlags.Nothing, GroupStrategy.Date, TargetFilenameStrategy.TicksHex, null, @"F:", @"E:")),
                 new Example(
                     "Copy images from a single directory (ignore subdirectories)",
-                    new Options(true, false, false, IgnoreFlags.Nothing, GroupStrategy.Date, TargetFilenameStrategy.TicksHex, null, @"F:", @"E:")),
+                    new Options(true, false, false, false, IgnoreFlags.Nothing, GroupStrategy.Date, TargetFilenameStrategy.TicksHex, null, @"F:", @"E:")),
                 new Example(
                     "Do a test run without writing any files using the ticks naming strategy",
-                    new Options(false, false, true, IgnoreFlags.Nothing, GroupStrategy.Date, TargetFilenameStrategy.Ticks, null, @"F:", @"E:")),
+                    new Options(false, false, true, false, IgnoreFlags.Nothing, GroupStrategy.Date, TargetFilenameStrategy.Ticks, null, @"F:", @"E:")),
                 new Example(
                     "Copy images treating rejects as accepted",
-                    new Options(false, false, false, IgnoreFlags.Rejection, GroupStrategy.Date, TargetFilenameStrategy.Ticks, null, @"F:", @"E:")),
+                    new Options(false, false, false, false, IgnoreFlags.Rejection, GroupStrategy.Date, TargetFilenameStrategy.Ticks, null, @"F:", @"E:")),
                 new Example(
                     "Ignore (don't copy) rejected images to the target folders",
-                    new Options(false, false, false, IgnoreFlags.Rejected, GroupStrategy.Date, TargetFilenameStrategy.Ticks, null, @"F:", @"E:")),
+                    new Options(false, false, false, false, IgnoreFlags.Rejected, GroupStrategy.Date, TargetFilenameStrategy.Ticks, null, @"F:", @"E:")),
+                new Example(
+                    "Copy images from a single directory (ignore subdirectories) and include telescope in the destination file name",
+                    new Options(true, false, false, true, IgnoreFlags.Nothing, GroupStrategy.Date, TargetFilenameStrategy.TicksHex, null, @"F:", @"E:")),
             };
 
         /// <summary>
@@ -118,6 +124,12 @@ namespace Stellinator.Configuration
         /// </summary>
         [Option('s', "scan-only", Default = false, HelpText = "Scan only (don't actually update).")]
         public bool ScanOnly { get; private set; }
+
+        /// <summary>
+        /// Gets a value indicating whether or not to include the telescope name in the target directory.
+        /// </summary>
+        [Option('c', "include-scope", Default = false, HelpText = "Include scope name in destination path.")]
+        public bool IncludeScope { get; private set; }
 
         /// <summary>
         /// Gets a value indicating whether rejects should be included.

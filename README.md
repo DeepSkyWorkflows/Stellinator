@@ -95,6 +95,7 @@ The following options are available with Stellinator.
 |`-d`|`--directory-only`|`false`|Only scans a single directory; does not recurse subdirectories.|
 |`-q`|`--quiet-mode`|`false`|Suppress verbose updates.|
 |`-s`|`--scan-only`|`false`|Scan only; show logic but do not copy files.|
+|`-c`|`--include-scope`|`false`|Include Stellina name as directory in output.|
 |`-i`|`--ignore`|`Nothing`|Choose to ignore files. Combine multiple options by separating them with a comma. Options are:<br>`Nothing`<br>`Rejection` will process rejected files as if they are accepted.<br>`Rejected` will ignore and not copy rejected files.<br>`Jpeg`<br>`Tiff`<br>`AllButLast` will only copy the most recent `.jpeg` and `.tif` from Stellina.|
 |`-g`|`--group-strategy`|`Date`|Choose how to group images together. Will create directories based on:<br>`Observation` folder per object<br>`Date` folder per object per date<br>`Capture` folder per capture|
 |`-t`|`--target-filename-strategy`|`TicksHex`|Choose the strategy to rename target images. Valid values: `Original` preserves filenames<br>`New` uses a prefix you provide<br>`Ticks` uses numeric timestamp<br>`TicksHex` uses hexadecimal timestamp|

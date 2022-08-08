@@ -18,6 +18,7 @@ namespace StellinatorTests
                 false,
                 false,
                 false,
+                false,
                 IgnoreFlags.Nothing,
                 GroupStrategy.Date,
                 TargetFilenameStrategy.TicksHex,

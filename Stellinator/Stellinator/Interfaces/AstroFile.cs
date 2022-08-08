@@ -38,6 +38,11 @@ namespace Stellinator.Interfaces
         public string Capture { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the file was parsed from the new format.
+        /// </summary>
+        public bool IsNewFormat { get; set; }
+
+        /// <summary>
         /// Gets or sets the source path of the file.
         /// </summary>
         public string SourcePath

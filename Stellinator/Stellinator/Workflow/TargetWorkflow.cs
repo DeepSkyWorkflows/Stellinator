@@ -26,6 +26,7 @@ namespace Stellinator.Workflow
             var directoryName = string.Empty;
             var rootDirectory = string.Empty;
             var fileName = string.Empty;
+            var telescope = "Stellina";
             var imageIndex = 1;
             var rejectedIndex = 1;
 
@@ -63,7 +64,7 @@ namespace Stellinator.Workflow
                     if (options.GroupStrategy != GroupStrategy.Observation)
                     {
                         var dateStr = date.ToString("yyyy-MM-dd");
-                        directoryName = $"{directoryName}{ds}{dateStr}";
+                        directoryName = options.IncludeScope ? $"{directoryName}{ds}{telescope}{ds}{dateStr}" : $"{directoryName}{ds}{dateStr}";
                         rootDirectory = directoryName;
                         dateDirectories.Add(directoryName);
                     }

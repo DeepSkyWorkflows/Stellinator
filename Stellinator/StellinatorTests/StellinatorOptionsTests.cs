@@ -19,6 +19,7 @@ namespace StellinatorTests
             var recurse = new[] { true, false };
             var quietMode = new[] { true, false };
             var scanOnly = new[] { true, false };
+            var includeScope = new[] { true, false };
 
             var ignoreFlags = new[]
             {
@@ -45,8 +46,8 @@ namespace StellinatorTests
                 TargetFilenameStrategy.TicksHex
             };
 
-            (int rIdx, int qIdx, int sIdx, int ifIdx, int gIdx, int tfIdx)
-            = (0, 0, 0, 0, 0, 0);
+            (int rIdx, int qIdx, int sIdx, int scIdx, int ifIdx, int gIdx, int tfIdx)
+            = (0, 0, 0, 0, 0, 0, 0);
 
             while (tfIdx < targetFilenameStragies.Length)
             {
@@ -55,6 +56,7 @@ namespace StellinatorTests
                     quietMode[qIdx],
                     recurse[rIdx],
                     scanOnly[sIdx],
+                    includeScope[scIdx],
                     ignoreFlags[ifIdx],
                     groupStrategies[gIdx],
                     targetFilenameStragies[tfIdx]
@@ -72,15 +74,20 @@ namespace StellinatorTests
                         if (sIdx == scanOnly.Length)
                         {
                             sIdx = 0;
-                            ifIdx++;
-                            if (ifIdx == ignoreFlags.Length)
+                            scIdx++;
+                            if (scIdx == includeScope.Length)
                             {
-                                ifIdx = 0;
-                                gIdx++;
-                                if (gIdx == groupStrategies.Length)
+                                scIdx = 0;
+                                ifIdx++;
+                                if (ifIdx == ignoreFlags.Length)
                                 {
-                                    gIdx = 0;
-                                    tfIdx++;
+                                    ifIdx = 0;
+                                    gIdx++;
+                                    if (gIdx == groupStrategies.Length)
+                                    {
+                                        gIdx = 0;
+                                        tfIdx++;
+                                    }
                                 }
                             }
                         }
@@ -95,6 +102,7 @@ namespace StellinatorTests
             bool quietMode,
             bool recurseOption,
             bool scanOption,
+            bool includeScope,
             IgnoreFlags ignoreFlags,
             GroupStrategy groupStrategy,
             TargetFilenameStrategy targetFilenameStrategy)
@@ -110,6 +118,7 @@ namespace StellinatorTests
                 recurseOption,
                 quietMode,
                 scanOption,
+                includeScope,
                 ignoreFlags,
                 groupStrategy,
                 targetFilenameStrategy,
@@ -121,6 +130,7 @@ namespace StellinatorTests
             Assert.Equal(recurseOption, options.DirectoryOnly);
             Assert.Equal(quietMode, options.QuietMode);
             Assert.Equal(scanOption, options.ScanOnly);
+            Assert.Equal(includeScope, options.IncludeScope);
             Assert.Equal(ignoreFlags, options.Ignore);
             Assert.Equal(groupStrategy, options.GroupStrategy);
             Assert.Equal(targetFilenameStrategy, options.TargetFilenameStrategy);
@@ -139,6 +149,7 @@ namespace StellinatorTests
             bool quietOption,
             bool recurseOption,
             bool scanOption,
+            bool includeScope,
             IgnoreFlags ignoreFlags,
             GroupStrategy groupStrategy,
             TargetFilenameStrategy targetFilenameStrategy)
@@ -160,6 +171,7 @@ namespace StellinatorTests
                 recurseOption,
                 false,
                 scanOption,
+                includeScope,
                 ignoreFlags,
                 groupStrategy,
                 targetFilenameStrategy,
@@ -171,7 +183,7 @@ namespace StellinatorTests
             var text = options.ToString();
 
             var lines = text.Split(
-                new []
+                new[]
                 {
                     '\r',
                     '\n'
@@ -179,7 +191,7 @@ namespace StellinatorTests
 
             static (string name, string value) Resolver<T>(
                 Options options,
-                Expression<Func<Options,T>> expr)
+                Expression<Func<Options, T>> expr)
             {
                 var value = options.ParseOption(expr)[40..];
                 var lambda = expr as LambdaExpression;
@@ -187,7 +199,7 @@ namespace StellinatorTests
                 return (member.Member.Name, value);
             }
 
-            foreach(var (optionName, value) in new[]
+            foreach (var (optionName, value) in new[]
             {
                 Resolver(options, opt => opt.DirectoryOnly),
                 Resolver(options, opt => opt.GroupStrategy),
@@ -221,6 +233,7 @@ namespace StellinatorTests
         {
             // arrange
             var options = new Options(
+                    false,
                     false,
                     false,
                     false,
@@ -259,12 +272,13 @@ namespace StellinatorTests
                     false,
                     false,
                     false,
+                    false,
                     IgnoreFlags.Nothing | IgnoreFlags.Rejected,
                     GroupStrategy.Capture,
                     TargetFilenameStrategy.New,
                     "new",
                     @"e:\",
-                    @"f:\"));
+                    @"f:\"));;
         }
 
         public static IEnumerable<object[]> FlagMatrix()
@@ -312,6 +326,7 @@ namespace StellinatorTests
                     false,
                     false,
                     false,
+                    false,
                     flags,
                     GroupStrategy.Capture,
                     TargetFilenameStrategy.New,
@@ -341,6 +356,7 @@ namespace StellinatorTests
                     false,
                     false,
                     false,
+                    false,
                     flags,
                     GroupStrategy.Capture,
                     TargetFilenameStrategy.New,
@@ -359,6 +375,7 @@ namespace StellinatorTests
             // arrange
             // arrange and act
             var options = new Options(
+                    false,
                     false,
                     false,
                     false,
