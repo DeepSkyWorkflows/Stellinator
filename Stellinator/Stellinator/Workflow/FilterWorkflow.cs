@@ -70,7 +70,7 @@ namespace Stellinator.Workflow
                 }
 
                 if (options.HasIgnoreFlag(IgnoreFlags.Rejection) == false
-                    && file.IsRaw && !file.IsNewFormat)
+                    && file.IsRaw)
                 {
                     var match = files.Any(f => f.FileName == file.FileNameMatch);
                     file.Rejected = !match;

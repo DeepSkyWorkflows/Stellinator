@@ -107,7 +107,6 @@ namespace Stellinator.Workflow
                 sequenceAndName = sequenceAndName[0].Split("_observation_");
                 if (sequenceAndName.Length > 1)
                 {
-                    result.Rejected = false;
                     result.IsNewFormat = true;
                 }
             }
